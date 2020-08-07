@@ -1,6 +1,6 @@
 {
     "name": "git-sandbox",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Git playground for training and testing",
     "repository": {
         "type": "git",

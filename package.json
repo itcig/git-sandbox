@@ -1,0 +1,57 @@
+{
+    "name": "git-sandbox",
+    "version": "1.0.0",
+    "description": "Git playground for training and testing",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/itcig/git-sandbox.git"
+    },
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/itcig/git-sandbox/issues"
+    },
+    "engines": {
+        "node": ">= 10"
+    },
+    "scripts": {
+        "build": "echo \"build script would happen here...\"",
+        "changelog": "npx auto-changelog --commit-limit false --unreleased --template keepachangelog",
+        "changelog:commit": "npm run changelog:stage && git commit -m \"chore(changelog): Updated changelog\"",
+        "changelog:stage": "npm run changelog && git add CHANGELOG.md",
+        "prettier": "prettier --write \"{src,test}/**/*.js\"",
+        "release": "release-it --no-npm.publish",
+        "release:patch": "release-it --ci patch --no-npm.publish",
+        "release:minor": "release-it --ci minor --no-npm.publish",
+        "release:major": "release-it --ci major --no-npm.publish",
+        "release:dry-run": "release-it --dry-run --no-npm.publish",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "lint-staged": {
+        "*.{js,ts}": [
+            "eslint --fix"
+        ],
+        "*.{js,css,md}": "prettier --write"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged && npm run build && npm run changelog:stage"
+        }
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "auto-changelog": "^1.16.4",
+        "babel-eslint": "^10.1.0",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.9.0",
+        "eslint-plugin-import": "^2.20.0",
+        "eslint-plugin-markdown": "^1.0.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "husky": "^4.2.1",
+        "lint-staged": "^10.0.2",
+        "prettier": "^1.19.1",
+        "prettier-markdown": "^0.1.8",
+        "release-it": "^12.6.1",
+        "rimraf": "^3.0.0"
+    }
+}

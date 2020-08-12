@@ -1,3 +1,11 @@
 node_modules
 .env
-/vendor/
+vendor/
+*.log
+
+## Local Mac OS Files
+.DS_Store
+.idea
+.DS_Store?
+.localized
+.Spotlight-V100

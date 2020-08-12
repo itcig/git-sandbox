@@ -1,14 +1,16 @@
 {
-    "name": "itcig/git-sandbox",
-    "description": "Git sanbox for training and testing",
-    "type": "project",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "unfrgivn",
-            "email": "bradley.ash@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {}
+  "name": "itcig/git-sandbox",
+  "description": "Git sanbox for training and testing",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+	{
+	  "name": "unfrgivn",
+	  "email": "bradley.ash@gmail.com"
+	}
+  ],
+  "minimum-stability": "dev",
+  "require": {
+	"php": ">=7.2"
+  }
 }

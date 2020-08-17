@@ -2,7 +2,7 @@
 
 This repo is for practicing git best practices as well as CI/CD changes made during the of summer 2020.
 
-## Repo Setup :computer
+## Repo Setup :computer:
 
 -   Clone the [git-sandbox repo](https://github.com/itcig/git-sandbox) to your local machine `git clone https://github.com/itcig/git-sandbox.git`
 -   Once the repo has been cloned open the git-sandbox directory and run `yarn` to install the npm packages
@@ -35,7 +35,19 @@ Review the [Git Best Practices](#git-best-practices) below.
 
 ### Step Two - Correcting Problems
 
-1.
+1. Again, create a branch. This time for bug that doesn't exist
+1. As before make some changes
+1. Commit the changes using the new format
+1. Push the changes to Github, then create a pull request once again using the new format
+1. Merge the PR from your bug branch into the _main_ branch using the squash and merge format outlined below
+1. Now that we've got an incorrect PR on the _main_ branch we can fix it using `git rebase`
+1. Locally checkout the _main_ branch `git checkout main`
+1. Make sure you've got the most recent changes `git pull origin main`
+1. Now lets find the commit hash we'd like to roll back to `git log` will display all the commits on the branch from most recent to oldest
+1. Find the commit you'd like to roll back to and count how many commits came after it
+    - Assuming the PR commit you made is the only commit we'd like to remove, the number of commits above the last good commit should be 1
+1. Press `q` to quit out of the log
+1. To roll back the _main_ branch X commit(s) and leave the git log (essentially the branch's history) clean and readable run `git rebase -i HEAD~[number of commits to remove]`
 
 ## <a name="git-best-practices"></a> Git Best Practices :thumbsup:
 

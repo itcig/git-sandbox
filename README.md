@@ -30,6 +30,8 @@ Review the [Git Best Practices](#git-best-practices) below.
 1. Scroll down and click `Squash and merge` (if this is not an option the Merge button will have a dropdown that can be clicked to select Squash and Merge)
 1. Using the format listed in the [Merge section](#merge) create the commit message for the merge (this will be the only commit that will be seen on the `main` branch)
 1. After the merge is completed see the [commit log for the main branch](https://github.com/itcig/git-sandbox/commits/main), you should only see the merge commit listed
+1. Create a new release for your merged changes (this will be automated later on) see the [Releases section](#releases)
+1. [View the release on Github](https://github.com/itcig/git-sandbox/releases)
 
 ### Step Two - Correcting Problems
 
@@ -136,10 +138,14 @@ Review the [Git Best Practices](#git-best-practices) below.
     -   The end result should look like this ([#1](https://github.com/itcig/git-sandbox/pull/1))
 -   The body will be auto generated and should contain bullets for every commit within using the commit's title as the text following the bullet, the commit's body if it has one will be listed beneath the bullet
 
-## Releases
+## <a name="releases"></a> Releases
 
 -   A release should be created after a PR has been merged
 -   Determine whether the changes in the PR are considered a patch, minor, or major change see the below [Semantic Versioning section](#semantic-versioning) or use look at the [Git Commit Types](#commit-type) listed above
+-   Run the corresponding command to create the release
+    -   For [PATCH](#patch) run `yarn release:patch`
+    -   For [MINOR](#minor) run `yarn release:minor`
+    -   For [MAJOR](#major) run `yarn release:major`
 
 ## <a name="semantic-versioning"></a> [Semantic Versioning](https://semver.org/)
 

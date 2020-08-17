@@ -33,7 +33,24 @@ Review the [Git Best Practices](#git-best-practices) below.
 1. Create a new release for your merged changes (this will be automated later on) see the [Releases section](#releases)
 1. [View the release on Github](https://github.com/itcig/git-sandbox/releases)
 
-### Step Two - Correcting Problems
+### Step Two - Correcting commit messages on a feature or bug branch
+
+1. Again, create a branch for bug or feature
+1. As before make some changes
+1. Commit the changes, but put some typos are bad info int the message
+    - Make sure there are **multiple** commits
+1. Push the changes to Github
+1. Now that we've got some incorrect commit messages we can fix them using `git rebase`
+1. Locally checkout _your branch_ `git checkout [your branch]`
+1. Make sure you've got the most recent changes `git pull origin [your branch]`
+1. Now lets find the last good commit type `git log` to display all the commits on the branch from most recent to oldest
+1. Count how many commits from the begining og the list you'd like to change
+1. Press `q` to quit out of the log
+1. To correct the git log (essentially the branch's history) run `git rebase -i HEAD~[number of commits from the begining you need to go back]`
+    - If you made 3 commits and all 3 need to be adjusted the command would be `git rebase -i HEAD~3`
+1.
+
+### Step Three - Removing commits from the _main_ branch
 
 1. Again, create a branch. This time for bug that doesn't exist
 1. As before make some changes
@@ -43,7 +60,7 @@ Review the [Git Best Practices](#git-best-practices) below.
 1. Now that we've got an incorrect PR on the _main_ branch we can fix it using `git rebase`
 1. Locally checkout the _main_ branch `git checkout main`
 1. Make sure you've got the most recent changes `git pull origin main`
-1. Now lets find the commit hash we'd like to roll back to `git log` will display all the commits on the branch from most recent to oldest
+1. Now lets find the commit we'd like to roll back to `git log` will display all the commits on the branch from most recent to oldest
 1. Find the commit you'd like to roll back to and count how many commits came after it
     - Assuming the PR commit you made is the only commit we'd like to remove, the number of commits above the last good commit should be 1
 1. Press `q` to quit out of the log
@@ -146,8 +163,10 @@ Review the [Git Best Practices](#git-best-practices) below.
 
 -   Always choose to `Squash and merge` on github
 -   Use the same commit title structure as a standard commit see above [Commit Messages section](#commit-messages)
-    -   Append the following to the title `[#<pull request number>](https://github.com/itcig/<repo>/pull/<PR number>)`
-    -   The end result should look like this ([#1](https://github.com/itcig/git-sandbox/pull/1))
+    -   The PR commit's title should have a link back to the PR itself appened to the end
+    -   This should happen automatically when you click `Squash and merge` and Github should autolink the PR if you enter `#[PR number]`
+    -   Alternativly you may append the following to the title `[#<pull request number>](https://github.com/itcig/<repo>/pull/<PR number>)`
+    -   The end result should look like this :point_right: ([#1](https://github.com/itcig/git-sandbox/pull/1))
 -   The body will be auto generated and should contain bullets for every commit within using the commit's title as the text following the bullet, the commit's body if it has one will be listed beneath the bullet
 
 ## <a name="releases"></a> Releases

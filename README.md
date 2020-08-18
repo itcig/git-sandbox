@@ -14,7 +14,7 @@ This repo is for practicing git best practices as well as CI/CD changes made dur
 
 Review the [Git Best Practices](#git-best-practices) below.
 
-### Step One - The new process
+### <a name="step-one"></a>Step One - The new process
 
 1. Decided what feature you would like to add to the sandbox (this can be as complex or simple as you'd like)
 1. Create a feature branch using the format outlined in the [Branches section](#branches)
@@ -33,24 +33,78 @@ Review the [Git Best Practices](#git-best-practices) below.
 1. Create a new release for your merged changes (this will be automated later on) see the [Releases section](#releases)
 1. [View the release on Github](https://github.com/itcig/git-sandbox/releases)
 
-### Step Two - Correcting commit messages on a feature or bug branch
+### <a name="step-two"></a>Step Two - Correcting commit messages
 
-1. Again, create a branch for bug or feature
+1. Again, create a branch off of the _main_ branch for a bug or feature `git checkout main` then `git checkout -b [my step two branch]`
 1. As before make some changes
-1. Commit the changes, but put some typos are bad info int the message
+1. Commit the changes, but include some typos, bad information, or incorrect fromatting in the commit message(s)
     - Make sure there are **multiple** commits
 1. Push the changes to Github
+1. Now from your branch create a new branch `git checkout -b [my step three branch]`, this will be used in [Step Three](#step-three)
+1. Push this duplicate branch to the remote/Github `git push origin [my step three branch]`
+1. Switch back to the branch you made in step one `git checkout [my step two branch]`
 1. Now that we've got some incorrect commit messages we can fix them using `git rebase`
-1. Locally checkout _your branch_ `git checkout [your branch]`
-1. Make sure you've got the most recent changes `git pull origin [your branch]`
+1. Make sure you've got the most recent changes `git pull origin [your branch]` (you should, but this is generally a good idea to make sure another developer hasn't added changes)
 1. Now lets find the last good commit type `git log` to display all the commits on the branch from most recent to oldest
-1. Count how many commits from the begining og the list you'd like to change
-1. Press `q` to quit out of the log
+1. Count how many commits from the begining of the list you'd like to change
+1. Press `q` to quit out of the git log
 1. To correct the git log (essentially the branch's history) run `git rebase -i HEAD~[number of commits from the begining you need to go back]`
     - If you made 3 commits and all 3 need to be adjusted the command would be `git rebase -i HEAD~3`
-1.
+    - Vim will open and you'll see a list of commits and information on how to use rebase as seen below:
+    ```vim
+    pick 3888316 chore!: Gitignore, Composer, and index Setup
+    pick 4340aef feat(js): Add alert for thing
+    pick 2e3ef06 feat(js): Add alert for thing (#5)
+    pick 72d4605 refactor: Add empty line to EOF
 
-### Step Three - Removing commits from the _main_ branch
+    # Rebase 7d65997..72d4605 onto 72d4605 (4 commands)
+    #
+    # Commands:
+    # p, pick <commit> = use commit
+    # r, reword <commit> = use commit, but edit the commit message
+    # e, edit <commit> = use commit, but stop for amending
+    # s, squash <commit> = use commit, but meld into previous commit
+    # f, fixup <commit> = like "squash", but discard this commit's log message
+    # x, exec <command> = run command (the rest of the line) using shell
+    # b, break = stop here (continue rebase later with 'git rebase --continue')
+    # d, drop <commit> = remove commit
+    # l, label <label> = label current HEAD with a name
+    # t, reset <label> = reset HEAD to a label
+    # m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+    # .       create a merge commit using the original merge commit's
+    # .       message (or the oneline, if no original merge commit was
+    # .       specified). Use -c <commit> to reword the commit message.
+    #
+    # These lines can be re-ordered; they are executed from top to bottom.
+    #
+    # If you remove a line here THAT COMMIT WILL BE LOST.
+    ```
+1. Each commit will be prefaced with `pick` by default meaning the changes and message will be uneffected, you can adjust what will happen next by pressing `i` to enter Vim's insert mode
+1. Now you can change the preface from `pick` to `reword` on the commit(s) you would like to change the message(s) on
+1. Once you've updated the prefaces press the escape key to exit Vim's insert mode then type `:wq` to save and exit Vim
+1. The rebasing will start and when it gets to the commit(s) set to reword Vim will appear, you can press `i` to enter Vim's insert mode and then edit the message
+1. Once the messages have been adjusted press the escape key and enter `:wq` to save and exit Vim
+   - If you get an error try running `git rebase --continue` to keep the rebase moving forward
+1. Once the rebase is completed you will need to force push the branch to the remote, you can do this with the following command `git push origin [your branch] --force` 
+   - This **WILL** overwrite your previous commits, so only do this part if you're absolutly certain the local changes are correct
+1. After this completes you can check Github and you should see the new commit messages
+![Image of the destructive power of a git force push](https://miro.medium.com/max/400/0*XaLzNzYkA6PZjbl9.jpg)
+
+### <a name="step-three"></a>Step Three - Removing Commits
+
+1. Checkout the duplicate branch you created in [Step Two](#step-two) `git checkout [my step three branch]`
+1. This time we'll remove all the commits you had previously made
+1. Run the following to start the rebase `git rebase -i [the number of commits to be removed]`
+1. Just like before each commit will be prefaced with `pick` to change that press `i` to enter Vim's insert mode
+1. Now you can change the preface from `pick` to `drop` on each of the commits you had made in [Step Two](#step-two)
+1. Once you've updated the prefaces press the escape key to exit Vim's insert mode then type `:wq` to save and exit Vim
+1. The rebasing will start, this time as no messages are being updated Vim should not open, instead once it's completed you should see a message similar to: `Successfully rebased and updated refs/heads/[my step three branch].`
+1. You will once again need to force push the branch to the remote, you can do this with the following command `git push origin [your branch] --force` 
+1. After this completes you can check Github and you should see all the commits have been removed from the history/git log
+![Image of the destructive power of a git force push](https://media.makeameme.org/created/git-push-origin-kk91mu.jpg)
+
+
+### <a name="step-four"></a>Step Four - Removing commits from the _main_ branch
 
 1. Again, create a branch. This time for bug that doesn't exist
 1. As before make some changes

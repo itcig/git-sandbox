@@ -31,7 +31,7 @@
         "*.{js,ts}": [
             "eslint --fix"
         ],
-        "*.{js,css,md}": "prettier --write"
+        "*.{js,css,html,md,php}": "prettier --write"
     },
     "husky": {
         "hooks": {
@@ -40,6 +40,7 @@
     },
     "dependencies": {},
     "devDependencies": {
+        "@prettier/plugin-php": "^0.14.3",
         "auto-changelog": "^1.16.4",
         "babel-eslint": "^10.1.0",
         "eslint": "^6.8.0",
@@ -49,7 +50,7 @@
         "eslint-plugin-prettier": "^3.1.2",
         "husky": "^4.2.1",
         "lint-staged": "^10.0.2",
-        "prettier": "^1.19.1",
+        "prettier": "^2.0.5",
         "prettier-markdown": "^0.1.8",
         "release-it": "^12.6.1",
         "rimraf": "^3.0.0"

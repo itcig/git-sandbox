@@ -4,4 +4,5 @@ module.exports = {
     singleQuote: true,
     tabWidth: 4,
     printWidth: 140,
+    braceStyle: '1tbs',
 };

@@ -213,7 +213,7 @@ Review the [Git Best Practices](#git-best-practices) below.
     -   This doesn't need to be 1 to 1 if you add some logic, update the docs, and update styles those could all be contained in a single bullet
     -   May also exclude minor dependency updates as well
 
-### <a name="merging></a> Merging
+### <a name="merging"></a> Merging
 
 -   Always choose to `Squash and merge` on github
 -   Use the same commit title structure as a standard commit see above [Commit Messages section](#commit-messages)

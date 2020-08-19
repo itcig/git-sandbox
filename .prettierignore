@@ -1,0 +1,14 @@
+## Third Party Code
+node_modules
+vendor/
+
+## Misc
+.env
+*.log
+
+## Local Mac OS Files
+.DS_Store
+.idea
+.DS_Store?
+.localized
+.Spotlight-V100

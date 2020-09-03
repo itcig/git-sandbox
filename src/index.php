@@ -1,7 +1,7 @@
 <?php
 
 function prettierTestFunction() {
-    $var = 'This is using tabs at the time of writting it';
+    $var = 'This is using tabs at the time of writing it';
 
     return $var;
 }

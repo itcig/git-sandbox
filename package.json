@@ -31,7 +31,7 @@
         "*.{js,ts}": [
             "eslint --fix"
         ],
-        "*.{js,css,html,md,php}": "prettier --write"
+        "*.{js,css,html,md,json,php}": "prettier --write"
     },
     "husky": {
         "hooks": {

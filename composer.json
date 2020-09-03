@@ -1,16 +1,29 @@
 {
-  "name": "itcig/git-sandbox",
-  "description": "Git sanbox for training and testing",
-  "type": "project",
-  "license": "MIT",
-  "authors": [
-	{
-	  "name": "unfrgivn",
-	  "email": "bradley.ash@gmail.com"
-	}
-  ],
-  "minimum-stability": "dev",
-  "require": {
-	"php": ">=7.2"
-  }
+    "name": "itcig/git-sandbox",
+    "description": "Git sandbox for training and testing",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "unfrgivn",
+            "email": "bradley.ash@gmail.com"
+        },
+        {
+            "name": "skwid138",
+            "email": "hunter.rancourt@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "mockery/mockery": "^1.4@dev"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
 }

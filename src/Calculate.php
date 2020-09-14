@@ -8,7 +8,7 @@ class Calculate {
      *
      * @param float|int $length
      *
-     * @return float|int
+     * @return float|int The area of the square
      */
     public function areaOfSquare($length) {
         // Make sure the argument is a number -- Strings may evaluate to true when passed to is_numeric()

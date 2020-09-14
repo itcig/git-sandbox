@@ -25,7 +25,7 @@
         "release:minor": "release-it --ci minor --no-npm.publish",
         "release:major": "release-it --ci major --no-npm.publish",
         "release:dry-run": "release-it --dry-run --no-npm.publish",
-        "test": "mocha --recursive || true"
+        "test": "mocha || true"
     },
     "lint-staged": {
         "*.{js,ts}": [

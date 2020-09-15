@@ -27,7 +27,7 @@ steps:
         #  '<container-name>=<docker-image:tag>'
       args: ['set', 'image', '--namespace', 'dev', 'deployment/git-sandbox-cigsecure-com', 'site=gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA']
       env:
-        - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+        - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
         - 'CLOUDSDK_CONTAINER_CLUSTER=bullet-cluster'
   
   

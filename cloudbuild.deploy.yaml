@@ -1,0 +1,33 @@
+steps:
+
+    - id: 'Build Container'
+      name: 'gcr.io/cloud-builders/docker'
+      args: [
+              'build',
+              '-t', 'gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA',
+              '-t', 'gcr.io/$PROJECT_ID/git-sandbox:latest',
+              '--cache-from', 'gcr.io/$PROJECT_ID/git-sandbox:latest',
+              '.'
+          ]
+  
+    - id: 'Push to Container Registry (tagged)'
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['push', 'gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA']
+  
+    - id: 'Push to Container Registry (latest)'
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['push', 'gcr.io/$PROJECT_ID/git-sandbox:latest']
+  
+    # Specify the deployment name and also the container name = the new tagged image
+    - id: 'Deploy to Kubernetes Cluster'
+      name: 'gcr.io/cloud-builders/kubectl'
+        # Set the new image for your deployment using the following arguments:
+        #  '--namespace', '<namespace>' (optional)
+        #  'deployment/<deployment-name>'
+        #  '<container-name>=<docker-image:tag>'
+      args: ['set', 'image', '--namespace', 'dev', 'deployment/git-sandbox-cigsecure-com', 'site=gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA']
+      env:
+        - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+        - 'CLOUDSDK_CONTAINER_CLUSTER=bullet-cluster'
+  
+  

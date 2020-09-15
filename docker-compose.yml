@@ -1,0 +1,15 @@
+version: "3"
+services:
+  web:
+    image: unfrgivn/nginx-php-fpm
+    restart: unless-stopped
+    ports:
+      - "${LOCAL_PORT_WEB}:80"
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      WEBROOT: /var/www/html/web
+      ENABLE_XDEBUG: ${ENABLE_XDEBUG}
+      PHP_ERRORS_STDERR: ${PHP_ERRORS_STDERR}
+      NGINX_ERRORS: ${NGINX_ERRORS}
+      HUNTER: ${HUNTER}

@@ -1,58 +1,79 @@
 steps:
 
-    # - id: 'Install frontend packages'
-    #   name: gcr.io/cloud-builders/yarn
-    #   entrypoint: yarn
-    #   args: ['--cwd', 'app/web/app/themes/sage', 'install', '--production', '--frozen-lockfile']
+# Each step below will run sequentially so the order is important
+# The 'id' is arbitrary and is just informational
+# The 'name' is the name of a Docker image, if unspecified this will pull from dockerhub
+# The 'entrypoint' is the command to run
+# The 'args' are what is passed to the command being run, each item in the array will be separated by a space
 
-    # - id: 'Test frontend packages'
-    #   name: gcr.io/cloud-builders/yarn
-    #   entrypoint: yarn
-    #   args: ['--cwd', 'app/web/app/themes/sage', 'test']
+  # Step 1: Install Node modules
+   - id: 'Install frontend packages'
+     name: gcr.io/cloud-builders/yarn
+     entrypoint: yarn
+     args: ['--cwd', 'app/web/app/themes/sage', 'install', '--production', '--frozen-lockfile']
 
-    # - id: 'Build frontend packages'
-    #   name: gcr.io/cloud-builders/yarn
-    #   entrypoint: yarn
-    #   args: ['--cwd', 'app/web/app/themes/sage', 'build:prod']
+  # Step 2: Run Javascript tests with Mocha.js
+   - id: 'Test Javascript'
+      name: gcr.io/cloud-builders/yarn
+      entrypoint: yarn
+      args: ['--cwd', 'app/web/app/themes/sage', 'test']
 
-    - id: 'Install backend packages'
-      name: composer
-      entrypoint: composer
-      args: ['install', '--ignore-platform-reqs', '--working-dir=./app']
+  # Step 3: Bundle and minify JS, and Scss
+   - id: 'Build frontend packages'
+     name: gcr.io/cloud-builders/yarn
+     entrypoint: yarn
+     args: ['--cwd', 'app/web/app/themes/sage', 'build:prod']
 
-    - id: 'Test backend packages'
-      name: epcallan/php7-testing-phpunit:7.2-phpunit7
-      entrypoint: phpunit
-      args: ['--bootstrap', 'app/vendor/autoload.php', 'app/tests/']
+  # Step 4: Install Composer managed dependencies
+   - id: 'Install backend packages'
+       name: composer
+       entrypoint: composer
+       args: [ 'install', '--ignore-platform-reqs', '--working-dir=./app' ]
 
-    - id: 'Build Container'
-      name: 'gcr.io/cloud-builders/docker'
-      args: [
-              'build',
-              '-t', 'gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA',
-              '-t', 'gcr.io/$PROJECT_ID/git-sandbox:latest',
-              '--cache-from', 'gcr.io/$PROJECT_ID/git-sandbox:latest',
-              '.'
-          ]
-  
-    - id: 'Push to Container Registry (tagged)'
-      name: 'gcr.io/cloud-builders/docker'
-      args: ['push', 'gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA']
-  
-    - id: 'Push to Container Registry (latest)'
-      name: 'gcr.io/cloud-builders/docker'
-      args: ['push', 'gcr.io/$PROJECT_ID/git-sandbox:latest']
-  
-    # Specify the deployment name and also the container name = the new tagged image
-    - id: 'Deploy to Kubernetes Cluster'
-      name: 'gcr.io/cloud-builders/kubectl'
-        # Set the new image for your deployment using the following arguments:
-        #  '--namespace', '<namespace>' (optional)
-        #  'deployment/<deployment-name>'
-        #  '<container-name>=<docker-image:tag>'
-      args: ['set', 'image', '--namespace', 'dev', 'deployment/git-sandbox-cigsecure-com', 'site=gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA']
+  # Step 5: Run PHPUnit and Mockery tests
+   - id: 'Test PHP'
+       name: skwid138/php7-phpunit-mockery:latest
+       entrypoint: phpunit
+       args: [ '--bootstrap', 'app/vendor/autoload.php', '../tests/' ]
+
+
+# *** Docker and Kuburnetes ***
+
+  # Step 6: Build Docker image
+  - id: 'Build Container'
+    name: 'gcr.io/cloud-builders/docker'
+    args: [
+        'build',
+        '-t', 'gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA',
+        '-t', 'gcr.io/$PROJECT_ID/git-sandbox:latest',
+        '--cache-from', 'gcr.io/$PROJECT_ID/git-sandbox:latest',
+        '.'
+    ]
+
+  # Step 7: Use the latest commit short shaw to tag a Docker image
+  - id: 'Push to Container Registry (tagged)'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA']
+
+  # Step 8: Use the 'latest' to create a Docker image
+  - id: 'Push to Container Registry (latest)'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/git-sandbox:latest']
+
+  # Step 9: Deploy the newly created Docker image to Kubernetes
+  - id: 'Deploy to Kubernetes Cluster'
+    name: 'gcr.io/cloud-builders/kubectl'
+    # Set the new image for your deployment using the following arguments:
+      # '--namespace', '<namespace>' (optional)
+      # 'deployment/<deployment-name>'
+      # '<container-name>=<docker-image:tag>'
+    args: [
+        'set', 'image',
+        '--namespace', 'dev',
+        'deployment/git-sandbox-cigsecure-com',
+        'site=gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA'
+    ]
       env:
         - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
         - 'CLOUDSDK_CONTAINER_CLUSTER=bullet-cluster'
-  
-  
+

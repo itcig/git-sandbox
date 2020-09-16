@@ -1,9 +1,15 @@
+## Dependencies
 node_modules
-.env
 vendor/
-*.log
 
-## Local Mac OS Files
+## Project variables
+.env
+
+## Logs and Caches
+*.log
+.phpunit.result.cache
+
+## macOS and Editor Files
 .DS_Store
 .idea
 .DS_Store?

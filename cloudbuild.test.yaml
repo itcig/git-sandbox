@@ -4,13 +4,13 @@ steps:
   - id: 'Install frontend packages'
     name: gcr.io/cloud-builders/yarn
     entrypoint: yarn
-    args: ['--frozen-lockfile']
+    args: ['--cwd', '../.', 'install', '--frozen-lockfile']
 
   # Step 2: Run Javascript tests with Mocha.js
   - id: 'Run Javascript tests with Mocha.js'
       name: gcr.io/cloud-builders/yarn
       entrypoint: yarn
-      args: ['test']
+      args: ['--cwd', '../.', 'test']
 
   # Step 3: Bundle and minify JS, and Scss
 #  - id: 'Build frontend packages'
@@ -28,4 +28,4 @@ steps:
   - id: 'Run PHP tests with PHPUnit and Mockery tests'
       name: skwid138/php7-phpunit-mockery:latest
       entrypoint: phpunit
-      args: [ '--bootstrap', 'src/vendor/autoload.php', '../tests/' ]
+      args: [ '--bootstrap', './vendor/autoload.php', '../tests/' ]

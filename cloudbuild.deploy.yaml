@@ -19,10 +19,10 @@ steps:
       args: ['test']
 
   # Step 3: Bundle and minify JS, and Scss
-   - id: 'Build frontend packages'
-     name: gcr.io/cloud-builders/yarn
-     entrypoint: yarn
-     args: ['--cwd', 'app/web/app/themes/sage', 'build:prod']
+#   - id: 'Build frontend packages'
+#     name: gcr.io/cloud-builders/yarn
+#     entrypoint: yarn
+#     args: ['build:prod']
 
   # Step 4: Install Composer managed dependencies
    - id: 'Install backend packages'

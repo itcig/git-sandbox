@@ -1,5 +1,30 @@
 steps:
 
+    # - id: 'Install frontend packages'
+    #   name: gcr.io/cloud-builders/yarn
+    #   entrypoint: yarn
+    #   args: ['--cwd', 'app/web/app/themes/sage', 'install', '--production', '--frozen-lockfile']
+
+    # - id: 'Test frontend packages'
+    #   name: gcr.io/cloud-builders/yarn
+    #   entrypoint: yarn
+    #   args: ['--cwd', 'app/web/app/themes/sage', 'test']
+
+    # - id: 'Build frontend packages'
+    #   name: gcr.io/cloud-builders/yarn
+    #   entrypoint: yarn
+    #   args: ['--cwd', 'app/web/app/themes/sage', 'build:prod']
+
+    - id: 'Install backend packages'
+      name: composer
+      entrypoint: composer
+      args: ['install', '--ignore-platform-reqs', '--working-dir=./app']
+
+    - id: 'Test backend packages'
+      name: epcallan/php7-testing-phpunit:7.2-phpunit7
+      entrypoint: phpunit
+      args: ['--bootstrap', 'app/vendor/autoload.php', 'app/tests/']
+
     - id: 'Build Container'
       name: 'gcr.io/cloud-builders/docker'
       args: [

@@ -7,10 +7,10 @@ steps:
     args: ['--cwd', 'app/web/app/themes/sage', 'install', '--production', '--frozen-lockfile']
 
   # Step 2: Run Javascript tests with Mocha.js
-  - id: 'Test frontend packages'
+  - id: 'Run Javascript tests with Mocha.js'
       name: gcr.io/cloud-builders/yarn
       entrypoint: yarn
-      args: ['--cwd', 'app/web/app/themes/sage', 'test']
+      args: ['test']
 
   # Step 3: Bundle and minify JS, and Scss
   - id: 'Build frontend packages'
@@ -24,8 +24,8 @@ steps:
       entrypoint: composer
       args: [ 'install', '--ignore-platform-reqs', '--working-dir=./app' ]
 
-  # Step 5: Run PHPUnit and Mockery tests
-  - id: 'Test PHP'
+  # Step 5: Run PHP tests with PHPUnit and Mockery tests
+  - id: 'Run PHP tests with PHPUnit and Mockery tests'
       name: skwid138/php7-phpunit-mockery:latest
       entrypoint: phpunit
       args: [ '--bootstrap', 'app/vendor/autoload.php', '../tests/' ]

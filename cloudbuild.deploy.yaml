@@ -16,7 +16,7 @@ steps:
    - id: 'Test Javascript'
       name: gcr.io/cloud-builders/yarn
       entrypoint: yarn
-      args: ['--cwd', 'app/web/app/themes/sage', 'test']
+      args: ['test']
 
   # Step 3: Bundle and minify JS, and Scss
    - id: 'Build frontend packages'

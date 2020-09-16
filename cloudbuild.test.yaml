@@ -4,7 +4,7 @@ steps:
   - id: 'Install frontend packages'
     name: gcr.io/cloud-builders/yarn
     entrypoint: yarn
-    args: ['--cwd', 'app/web/app/themes/sage', 'install', '--production', '--frozen-lockfile']
+    args: ['--frozen-lockfile']
 
   # Step 2: Run Javascript tests with Mocha.js
   - id: 'Run Javascript tests with Mocha.js'
@@ -28,4 +28,4 @@ steps:
   - id: 'Run PHP tests with PHPUnit and Mockery tests'
       name: skwid138/php7-phpunit-mockery:latest
       entrypoint: phpunit
-      args: [ '--bootstrap', 'app/vendor/autoload.php', '../tests/' ]
+      args: [ '--bootstrap', 'src/vendor/autoload.php', '../tests/' ]

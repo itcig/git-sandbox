@@ -49,8 +49,10 @@ Review the [Git Best Practices](#git-best-practices) below.
 1. Count how many commits from the begining of the list you'd like to change
 1. Press `q` to quit out of the git log
 1. To correct the git log (essentially the branch's history) run `git rebase -i HEAD~[number of commits from the begining you need to go back]`
+
     - If you made 3 commits and all 3 need to be adjusted the command would be `git rebase -i HEAD~3`
     - Vim will open and you'll see a list of commits and information on how to use rebase as seen below:
+
     ```vim
     pick 3888316 chore!: Gitignore, Composer, and index Setup
     pick 4340aef feat(js): Add alert for thing
@@ -79,16 +81,17 @@ Review the [Git Best Practices](#git-best-practices) below.
     #
     # If you remove a line here THAT COMMIT WILL BE LOST.
     ```
+
 1. Each commit will be prefaced with `pick` by default meaning the changes and message will be uneffected, you can adjust what will happen next by pressing `i` to enter Vim's insert mode
 1. Now you can change the preface from `pick` to `reword` on the commit(s) you would like to change the message(s) on
 1. Once you've updated the prefaces press the escape key to exit Vim's insert mode then type `:wq` to save and exit Vim
 1. The rebasing will start and when it gets to the commit(s) set to reword Vim will appear, you can press `i` to enter Vim's insert mode and then edit the message
 1. Once the messages have been adjusted press the escape key and enter `:wq` to save and exit Vim
-   - If you get an error try running `git rebase --continue` to keep the rebase moving forward
-1. Once the rebase is completed you will need to force push the branch to the remote, you can do this with the following command `git push origin [your branch] --force` 
-   - This **WILL** overwrite your previous commits, so only do this part if you're absolutly certain the local changes are correct
+    - If you get an error try running `git rebase --continue` to keep the rebase moving forward
+1. Once the rebase is completed you will need to force push the branch to the remote, you can do this with the following command `git push origin [your branch] --force`
+    - This **WILL** overwrite your previous commits, so only do this part if you're absolutly certain the local changes are correct
 1. After this completes you can check Github and you should see the new commit messages
-![Image of the destructive power of a git force push](https://miro.medium.com/max/400/0*XaLzNzYkA6PZjbl9.jpg)
+   ![Image of the destructive power of a git force push](https://miro.medium.com/max/400/0*XaLzNzYkA6PZjbl9.jpg)
 
 ### <a name="step-three"></a>Step Three - Removing Commits
 
@@ -99,10 +102,9 @@ Review the [Git Best Practices](#git-best-practices) below.
 1. Now you can change the preface from `pick` to `drop` on each of the commits you had made in [Step Two](#step-two)
 1. Once you've updated the prefaces press the escape key to exit Vim's insert mode then type `:wq` to save and exit Vim
 1. The rebasing will start, this time as no messages are being updated Vim should not open, instead once it's completed you should see a message similar to: `Successfully rebased and updated refs/heads/[my step three branch].`
-1. You will once again need to force push the branch to the remote, you can do this with the following command `git push origin [your branch] --force` 
+1. You will once again need to force push the branch to the remote, you can do this with the following command `git push origin [your branch] --force`
 1. After this completes you can check Github and you should see all the commits have been removed from the history/git log
-![Image of the destructive power of a git force push](https://media.makeameme.org/created/git-push-origin-kk91mu.jpg)
-
+   ![Image of the destructive power of a git force push](https://media.makeameme.org/created/git-push-origin-kk91mu.jpg)
 
 ### <a name="step-four"></a>Step Four - Removing commits from the _main_ branch
 
@@ -247,3 +249,5 @@ v0.0.0 translates to major.minor.patch
 <a name="patch"></a> **PATCH** - when the changes fix a bug in a backwards compatible manner
 
 -   This will include bug fixes
+
+## Google Cloud Build

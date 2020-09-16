@@ -1,0 +1,31 @@
+steps:
+
+  # Step 1: Install Node modules
+  - id: 'Install frontend packages'
+    name: gcr.io/cloud-builders/yarn
+    entrypoint: yarn
+    args: ['--cwd', 'app/web/app/themes/sage', 'install', '--production', '--frozen-lockfile']
+
+  # Step 2: Run Javascript tests with Mocha.js
+  - id: 'Test frontend packages'
+      name: gcr.io/cloud-builders/yarn
+      entrypoint: yarn
+      args: ['--cwd', 'app/web/app/themes/sage', 'test']
+
+  # Step 3: Bundle and minify JS, and Scss
+  - id: 'Build frontend packages'
+    name: gcr.io/cloud-builders/yarn
+    entrypoint: yarn
+    args: ['--cwd', 'app/web/app/themes/sage', 'build:prod']
+
+  # Step 4: Install Composer managed dependencies
+  - id: 'Install backend packages'
+      name: composer
+      entrypoint: composer
+      args: [ 'install', '--ignore-platform-reqs', '--working-dir=./app' ]
+
+  # Step 5: Run PHPUnit and Mockery tests
+  - id: 'Test PHP'
+      name: skwid138/php7-phpunit-mockery:latest
+      entrypoint: phpunit
+      args: [ '--bootstrap', 'app/vendor/autoload.php', '../tests/' ]

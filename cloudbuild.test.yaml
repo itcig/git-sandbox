@@ -4,13 +4,13 @@ steps:
   - id: 'Install frontend packages'
     name: gcr.io/cloud-builders/yarn
     entrypoint: yarn
-    args: ['install', '--frozen-lockfile']
+    args: ['--cwd', '../.', 'install', '--frozen-lockfile']
 
   # Step 1: Run Javascript tests with Mocha.js
   - id: 'Run Javascript tests with Mocha.js'
     name: gcr.io/cloud-builders/yarn
     entrypoint: yarn
-    args: ['test']
+    args: ['--cwd', '../.', 'test']
 
   # Step 3: Bundle and minify JS, and Scss
 #  - id: 'Build frontend packages'
@@ -22,7 +22,7 @@ steps:
   - id: 'Install backend packages'
     name: composer
     entrypoint: composer
-    args: [ 'install', '--ignore-platform-reqs', '--working-dir=./src']
+    args: [ 'install', '--ignore-platform-reqs', '--working-dir=./src'] # for WP we'd use '--working-dir=./app' as well
 
   # Step 3: Run PHP tests with PHPUnit and Mockery tests
   - id: 'Run PHP tests with PHPUnit and Mockery tests'

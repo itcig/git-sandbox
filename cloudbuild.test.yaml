@@ -8,9 +8,9 @@ steps:
 
   # Step 2: Run Javascript tests with Mocha.js
   - id: 'Run Javascript tests with Mocha.js'
-      name: gcr.io/cloud-builders/yarn
-      entrypoint: yarn
-      args: ['--cwd', '../.', 'test']
+    name: gcr.io/cloud-builders/yarn
+    entrypoint: yarn
+    args: ['--cwd', '../.', 'test']
 
   # Step 3: Bundle and minify JS, and Scss
 #  - id: 'Build frontend packages'
@@ -20,12 +20,12 @@ steps:
 
   # Step 4: Install Composer managed dependencies
   - id: 'Install backend packages'
-      name: composer
-      entrypoint: composer
-      args: [ 'install', '--ignore-platform-reqs', '--working-dir=./app' ]
+    name: composer
+    entrypoint: composer
+    args: [ 'install', '--ignore-platform-reqs', '--working-dir=./app' ]
 
   # Step 5: Run PHP tests with PHPUnit and Mockery tests
   - id: 'Run PHP tests with PHPUnit and Mockery tests'
-      name: skwid138/php7-phpunit-mockery:latest
-      entrypoint: phpunit
-      args: [ '--bootstrap', './vendor/autoload.php', '../tests/' ]
+    name: skwid138/php7-phpunit-mockery:latest
+    entrypoint: phpunit
+    args: [ '--bootstrap', './vendor/autoload.php', '../tests/' ]

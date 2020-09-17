@@ -26,15 +26,15 @@ steps:
 
   # Step 4: Install Composer managed dependencies
    - id: 'Install backend packages'
-       name: composer
-       entrypoint: composer
-       args: [ 'install', '--ignore-platform-reqs', '--working-dir=./app' ]
+     name: composer
+     entrypoint: composer
+     args: [ 'install', '--ignore-platform-reqs', '--working-dir=./app' ]
 
   # Step 5: Run PHPUnit and Mockery tests
    - id: 'Test PHP'
-       name: skwid138/php7-phpunit-mockery:latest
-       entrypoint: phpunit
-       args: [ '--bootstrap', 'src/vendor/autoload.php', '../tests/' ]
+     name: skwid138/php7-phpunit-mockery:latest
+     entrypoint: phpunit
+     args: [ '--bootstrap', 'src/vendor/autoload.php', '../tests/' ]
 
 
 # *** Docker and Kuburnetes ***

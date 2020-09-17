@@ -12,7 +12,7 @@
         "url": "https://github.com/itcig/git-sandbox/issues"
     },
     "engines": {
-        "node": ">= 10"
+        "node": ">= 12"
     },
     "scripts": {
         "build": "echo \"build script would happen here...\"",

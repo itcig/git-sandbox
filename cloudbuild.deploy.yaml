@@ -14,9 +14,9 @@ steps:
 
   # Step 1: Run Javascript tests with Mocha.js
    - id: 'Test Javascript'
-      name: gcr.io/cloud-builders/yarn
-      entrypoint: yarn
-      args: ['--cwd', '../.', 'test']
+    name: gcr.io/cloud-builders/yarn
+    entrypoint: yarn
+    args: ['--cwd', '../.', 'test']
 
   # Step ?: Bundle and minify JS, and Scss
 #   - id: 'Build frontend packages'

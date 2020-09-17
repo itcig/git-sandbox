@@ -6,31 +6,31 @@ steps:
 # The 'entrypoint' is the command to run
 # The 'args' are what is passed to the command being run, each item in the array will be separated by a space
 
-  # Step 1: Install Node modules
+  # Step 0: Install Node modules
    - id: 'Install frontend packages'
      name: gcr.io/cloud-builders/yarn
      entrypoint: yarn
      args: ['--cwd', '../.', 'install', '--frozen-lockfile']
 
-  # Step 2: Run Javascript tests with Mocha.js
+  # Step 1: Run Javascript tests with Mocha.js
    - id: 'Test Javascript'
       name: gcr.io/cloud-builders/yarn
       entrypoint: yarn
       args: ['--cwd', '../.', 'test']
 
-  # Step 3: Bundle and minify JS, and Scss
+  # Step ?: Bundle and minify JS, and Scss
 #   - id: 'Build frontend packages'
 #     name: gcr.io/cloud-builders/yarn
 #     entrypoint: yarn
 #     args: ['build:prod']
 
-  # Step 4: Install Composer managed dependencies
+  # Step 2: Install Composer managed dependencies
    - id: 'Install backend packages'
      name: composer
      entrypoint: composer
-     args: [ 'install', '--ignore-platform-reqs', '--working-dir=./app' ]
+     args: [ 'install', '--ignore-platform-reqs'] # for WP we'd use '--working-dir=./app' as well
 
-  # Step 5: Run PHPUnit and Mockery tests
+  # Step 3: Run PHPUnit and Mockery tests
    - id: 'Test PHP'
      name: skwid138/php7-phpunit-mockery:latest
      entrypoint: phpunit
@@ -39,7 +39,7 @@ steps:
 
 # *** Docker and Kuburnetes ***
 
-  # Step 6: Build Docker image
+  # Step 4: Build Docker image
   - id: 'Build Container'
     name: 'gcr.io/cloud-builders/docker'
     args: [
@@ -50,17 +50,17 @@ steps:
         '.'
     ]
 
-  # Step 7: Use the latest commit short shaw to tag a Docker image
+  # Step 5: Use the latest commit short shaw to tag a Docker image
   - id: 'Push to Container Registry (tagged)'
     name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/git-sandbox:$SHORT_SHA']
 
-  # Step 8: Use the 'latest' to create a Docker image
+  # Step 6: Use the 'latest' to create a Docker image
   - id: 'Push to Container Registry (latest)'
     name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/git-sandbox:latest']
 
-  # Step 9: Deploy the newly created Docker image to Kubernetes
+  # Step 7: Deploy the newly created Docker image to Kubernetes
   - id: 'Deploy to Kubernetes Cluster'
     name: 'gcr.io/cloud-builders/kubectl'
     # Set the new image for your deployment using the following arguments:
@@ -76,4 +76,3 @@ steps:
       env:
         - 'CLOUDSDK_COMPUTE_ZONE=us-east1-b'
         - 'CLOUDSDK_CONTAINER_CLUSTER=bullet-cluster'
-

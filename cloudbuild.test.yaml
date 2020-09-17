@@ -1,12 +1,12 @@
 steps:
 
-  # Step 1: Install Node modules
+  # Step 0: Install Node modules
   - id: 'Install frontend packages'
     name: gcr.io/cloud-builders/yarn
     entrypoint: yarn
     args: ['--cwd', '../.', 'install', '--frozen-lockfile']
 
-  # Step 2: Run Javascript tests with Mocha.js
+  # Step 1: Run Javascript tests with Mocha.js
   - id: 'Run Javascript tests with Mocha.js'
     name: gcr.io/cloud-builders/yarn
     entrypoint: yarn
@@ -18,13 +18,13 @@ steps:
 #    entrypoint: yarn
 #    args: ['build:prod']
 
-  # Step 4: Install Composer managed dependencies
+  # Step 2: Install Composer managed dependencies
   - id: 'Install backend packages'
     name: composer
     entrypoint: composer
-    args: [ 'install', '--ignore-platform-reqs', '--working-dir=./app' ]
+    args: [ 'install', '--ignore-platform-reqs'] # for WP we'd use '--working-dir=./app' as well
 
-  # Step 5: Run PHP tests with PHPUnit and Mockery tests
+  # Step 3: Run PHP tests with PHPUnit and Mockery tests
   - id: 'Run PHP tests with PHPUnit and Mockery tests'
     name: skwid138/php7-phpunit-mockery:latest
     entrypoint: phpunit

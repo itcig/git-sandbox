@@ -28,4 +28,4 @@ steps:
   - id: 'Run PHP tests with PHPUnit and Mockery tests'
     name: skwid138/php7-phpunit-mockery:latest
     entrypoint: phpunit
-    args: [ '--bootstrap', './vendor/autoload.php', '../tests/' ]
+    args: [ '--bootstrap', 'src/vendor/autoload.php', 'tests' ]

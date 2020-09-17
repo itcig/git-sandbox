@@ -22,7 +22,7 @@ steps:
   - id: 'Install backend packages'
     name: composer
     entrypoint: composer
-    args: [ 'install', '--ignore-platform-reqs'] # for WP we'd use '--working-dir=./app' as well
+    args: [ 'install', '--ignore-platform-reqs', '--working-dir=./'] # for WP we'd use '--working-dir=./app' as well
 
   # Step 3: Run PHP tests with PHPUnit and Mockery tests
   - id: 'Run PHP tests with PHPUnit and Mockery tests'

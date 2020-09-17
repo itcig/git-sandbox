@@ -22,10 +22,10 @@ steps:
   - id: 'Install backend packages'
     name: composer
     entrypoint: composer
-    args: [ 'install', '--ignore-platform-reqs', '--working-dir=./src'] # for WP we'd use '--working-dir=./app' as well
+    args: ['install', '--ignore-platform-reqs', '--working-dir=./src'] # for WP we'd use '--working-dir=./app' as well
 
   # Step 3: Run PHP tests with PHPUnit and Mockery tests
   - id: 'Run PHP tests with PHPUnit and Mockery tests'
     name: skwid138/php7-phpunit-mockery:latest
     entrypoint: phpunit
-    args: [ '--bootstrap', 'src/vendor/autoload.php', 'tests' ]
+    args: ['--bootstrap', 'src/vendor/autoload.php', 'tests']

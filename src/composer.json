@@ -11,6 +11,10 @@
         {
             "name": "skwid138",
             "email": "hunter.rancourt@gmail.com"
+        },
+        {
+            "name": "bree",
+            "email": "bree@capinfogroup.com"
         }
     ],
     "minimum-stability": "dev",

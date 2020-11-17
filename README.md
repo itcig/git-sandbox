@@ -6,7 +6,7 @@ This repo is for practicing git best practices as well as CI/CD changes made dur
 
 -   Clone the [git-sandbox repo](https://github.com/itcig/git-sandbox) to your local machine `git clone https://github.com/itcig/git-sandbox.git`
 -   Once the repo has been cloned open the git-sandbox directory and run `yarn` to install the npm packages
--   Next run `composer install` to install the php dependencies
+-   Next run `cd src && composer install` to install the php dependencies
 -   Create a [Personal access token](https://github.com/settings/tokens) for release-it
 -   Then add the following to your ~/.bash_profile `export GITHUB_TOKEN="[github personal access token]"`
 
